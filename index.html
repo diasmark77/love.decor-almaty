@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Decor Almaty — Мерекелік безендіру</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #fdf6ee;
+    --blush: #f2d9d0;
+    --rose: #c9867a;
+    --deep: #7a3e38;
+    --gold: #c8a96e;
+    --gold-light: #e8d5a3;
+    --dark: #1a0f0d;
+    --text: #4a2e2b;
+    --white: #fff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ─── CURSOR ─── */
+  body { cursor: none; }
+  .cursor {
+    position: fixed; top: 0; left: 0; width: 12px; height: 12px;
+    background: var(--rose); border-radius: 50%; pointer-events: none;
+    z-index: 9999; transform: translate(-50%,-50%);
+    transition: transform .15s ease, width .2s, height .2s, background .2s;
+    mix-blend-mode: multiply;
+  }
+  .cursor-ring {
+    position: fixed; top: 0; left: 0; width: 36px; height: 36px;
+    border: 1px solid var(--gold); border-radius: 50%; pointer-events: none;
+    z-index: 9998; transform: translate(-50%,-50%);
+    transition: transform .4s ease, width .3s, height .3s;
+  }
+
+  /* ─── FLOATING SOCIAL BUTTONS ─── */
+  .social-float {
+    position: fixed;
+    right: 18px;
+    bottom: 30px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  .social-float a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    box-shadow: 0 4px 18px rgba(0,0,0,.18);
+    transition: transform .22s, box-shadow .22s;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .social-float a:hover {
+    transform: scale(1.13) translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0,0,0,.22);
+  }
+  .social-float .wa-btn {
+    background: #25d366;
+  }
+  .social-float .ig-btn {
+    background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  }
+  .social-float svg { width: 22px; height: 22px; fill: #fff; display: block; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 24px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: transparent;
+    transition: background .4s, padding .4s;
+  }
+  nav.scrolled {
+    background: rgba(253,246,238,.95);
+    padding: 16px 60px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 40px rgba(122,62,56,.06);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 300; letter-spacing: 3px;
+    color: var(--dark); text-decoration: none;
+  }
+  .nav-logo span { color: var(--rose); font-style: italic; }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text); text-decoration: none; font-weight: 400;
+    position: relative; transition: color .3s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -3px; left: 0;
+    width: 0; height: 1px; background: var(--gold);
+    transition: width .35s ease;
+  }
+  .nav-links a:hover { color: var(--rose); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: var(--rose); color: var(--white) !important;
+    padding: 10px 28px; border-radius: 40px;
+    letter-spacing: 1.5px; font-size: 11px !important;
+    transition: background .3s, transform .2s !important;
+  }
+  .nav-cta:hover { background: var(--deep) !important; transform: translateY(-1px); }
+  .nav-cta::after { display: none !important; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 80% at 65% 50%, var(--blush) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 50% at 20% 80%, var(--gold-light) 0%, transparent 60%);
+    opacity: .6;
+  }
+  .hero-petals {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  }
+  .petal {
+    position: absolute;
+    width: 8px; height: 14px;
+    background: var(--blush);
+    border-radius: 50% 0 50% 0;
+    opacity: .5;
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+    10% { opacity: .5; }
+    90% { opacity: .3; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  }
+
+  .hero-text {
+    padding: 120px 60px 80px;
+    position: relative; z-index: 2;
+  }
+  .hero-badge {
+    display: inline-block;
+    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); border: 1px solid var(--gold-light);
+    padding: 6px 18px; border-radius: 30px;
+    margin-bottom: 32px;
+    animation: fadeUp .8s .2s both;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 6vw, 88px);
+    font-weight: 300; line-height: 1.05;
+    color: var(--dark);
+    animation: fadeUp .8s .4s both;
+  }
+  .hero-title em {
+    font-style: italic; color: var(--rose);
+    display: block;
+  }
+  .hero-title strong {
+    font-weight: 600; display: block;
+    font-size: .55em; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--text);
+    font-family: 'Jost', sans-serif;
+    margin-top: 8px;
+  }
+  .hero-sub {
+    margin-top: 28px;
+    font-size: 15px; line-height: 1.8; color: var(--text);
+    max-width: 400px; font-weight: 300;
+    animation: fadeUp .8s .6s both;
+  }
+  .hero-actions {
+    margin-top: 48px;
+    display: flex; gap: 20px; align-items: center;
+    animation: fadeUp .8s .8s both;
+  }
+  .btn-primary {
+    background: var(--rose); color: var(--white);
+    padding: 16px 44px; border-radius: 50px;
+    text-decoration: none; font-size: 13px; letter-spacing: 1.5px;
+    text-transform: uppercase; font-weight: 500;
+    transition: all .3s; display: inline-block;
+    box-shadow: 0 8px 32px rgba(201,134,122,.35);
+  }
+  .btn-primary:hover {
+    background: var(--deep); transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(122,62,56,.4);
+  }
+  .btn-ghost {
+    color: var(--text); text-decoration: none;
+    font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 10px;
+    transition: color .3s;
+  }
+  .btn-ghost:hover { color: var(--rose); }
+  .btn-ghost .arrow {
+    width: 36px; height: 36px; border: 1px solid var(--gold);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    transition: background .3s, border-color .3s;
+  }
+  .btn-ghost:hover .arrow { background: var(--gold); border-color: var(--gold); }
+
+  .hero-visual {
+    position: relative; height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-card-main {
+    position: relative; z-index: 3;
+    width: 340px; height: 480px;
+    background: linear-gradient(145deg, var(--blush), var(--cream));
+    border-radius: 200px 200px 160px 160px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    box-shadow: 0 30px 80px rgba(122,62,56,.15), inset 0 1px 0 rgba(255,255,255,.8);
+    animation: floatCard 6s ease-in-out infinite;
+    overflow: hidden;
+  }
+  @keyframes floatCard {
+    0%, 100% { transform: translateY(0px) rotate(-1deg); }
+    50% { transform: translateY(-16px) rotate(1deg); }
+  }
+  .hero-card-emoji {
+    font-size: 80px; margin-bottom: 20px;
+    filter: drop-shadow(0 4px 12px rgba(201,134,122,.3));
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+  .hero-card-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; color: var(--deep);
+    text-align: center; font-style: italic;
+  }
+  .hero-card-city {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-top: 8px;
+  }
+  .hero-card-float {
+    position: absolute; border-radius: 20px; padding: 16px 20px;
+    background: var(--white); box-shadow: 0 10px 40px rgba(0,0,0,.08);
+    z-index: 4;
+  }
+  .float1 {
+    top: 18%; right: 5%;
+    animation: float1 5s ease-in-out infinite;
+  }
+  .float2 {
+    bottom: 20%; left: 3%;
+    animation: float2 7s ease-in-out infinite;
+  }
+  .float3 {
+    top: 55%; right: 0%;
+    animation: float1 6s ease-in-out infinite .5s;
+  }
+  @keyframes float1 {
+    0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)}
+  }
+  @keyframes float2 {
+    0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)}
+  }
+  .float-icon { font-size: 28px; }
+  .float-text { font-size: 12px; color: var(--rose); font-weight: 500; margin-top: 4px; }
+  .float-sub { font-size: 10px; color: #aaa; }
+
+  .hero-stats {
+    position: absolute; bottom: 60px; left: 60px; z-index: 5;
+    display: flex; gap: 48px;
+    animation: fadeUp .8s 1s both;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px; font-weight: 300; color: var(--rose); line-height: 1;
+  }
+  .stat-label {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text); margin-top: 4px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(24px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+
+  /* ─── SECTION SHARED ─── */
+  section { padding: 100px 60px; }
+  .section-tag {
+    font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px; display: block;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 56px); font-weight: 300;
+    line-height: 1.1; color: var(--dark);
+  }
+  .section-title em { font-style: italic; color: var(--rose); }
+  .section-desc {
+    margin-top: 20px; font-size: 15px; line-height: 1.9;
+    color: var(--text); font-weight: 300; max-width: 540px;
+  }
+  .divider {
+    width: 60px; height: 1px; background: var(--gold);
+    margin: 24px 0;
+  }
+
+  /* ─── SERVICES ─── */
+  #services { background: var(--white); }
+  .services-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 64px;
+  }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 2px;
+  }
+  .service-card {
+    background: var(--cream);
+    padding: 50px 36px;
+    position: relative; overflow: hidden;
+    transition: transform .4s ease, box-shadow .4s;
+    cursor: default;
+  }
+  .service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px rgba(122,62,56,.1);
+    z-index: 2;
+  }
+  .service-card::before {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--rose), var(--gold));
+    transform: scaleX(0); transition: transform .4s; transform-origin: left;
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 60px; font-weight: 300; color: var(--blush);
+    position: absolute; top: 20px; right: 24px; line-height: 1;
+    transition: color .3s;
+  }
+  .service-card:hover .service-num { color: var(--gold-light); }
+  .service-icon { font-size: 42px; margin-bottom: 20px; }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 600; color: var(--dark);
+    margin-bottom: 12px;
+  }
+  .service-text { font-size: 13px; line-height: 1.8; color: var(--text); font-weight: 300; }
+  .service-tags {
+    margin-top: 20px; display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .tag {
+    font-size: 10px; letter-spacing: 1px; background: var(--white);
+    border: 1px solid var(--blush); padding: 4px 12px; border-radius: 20px;
+    color: var(--rose);
+  }
+
+  /* ─── WHY US ─── */
+  #why {
+    background: linear-gradient(135deg, var(--deep) 0%, var(--dark) 100%);
+    color: var(--white);
+  }
+  #why .section-title { color: var(--white); }
+  #why .section-tag { color: var(--gold-light); }
+  #why .section-desc { color: rgba(255,255,255,.6); }
+  .why-grid {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 40px;
+    margin-top: 64px;
+  }
+  .why-item { text-align: center; }
+  .why-icon {
+    width: 72px; height: 72px;
+    background: rgba(200,169,110,.12);
+    border: 1px solid rgba(200,169,110,.3);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 32px; margin: 0 auto 20px;
+    transition: background .3s, transform .3s;
+  }
+  .why-item:hover .why-icon {
+    background: rgba(200,169,110,.25); transform: scale(1.08);
+  }
+  .why-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; color: var(--white); margin-bottom: 10px;
+  }
+  .why-text { font-size: 13px; line-height: 1.8; color: rgba(255,255,255,.5); font-weight: 300; }
+
+  /* ─── GALLERY / PORTFOLIO ─── */
+  #portfolio { background: var(--cream); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 80px;
+    gap: 12px;
+    margin-top: 60px;
+  }
+  .gallery-item {
+    border-radius: 16px; overflow: hidden;
+    position: relative; cursor: pointer;
+    transition: transform .35s ease, box-shadow .35s;
+  }
+  .gallery-item:hover { transform: scale(1.02); box-shadow: 0 20px 60px rgba(0,0,0,.15); }
+  .gallery-item:nth-child(1) { grid-column: span 5; grid-row: span 4; }
+  .gallery-item:nth-child(2) { grid-column: span 4; grid-row: span 3; }
+  .gallery-item:nth-child(3) { grid-column: span 3; grid-row: span 2; }
+  .gallery-item:nth-child(4) { grid-column: span 4; grid-row: span 2; }
+  .gallery-item:nth-child(5) { grid-column: span 3; grid-row: span 2; }
+  .gallery-item:nth-child(6) { grid-column: span 5; grid-row: span 3; }
+  .gallery-item:nth-child(7) { grid-column: span 4; grid-row: span 2; }
+  .gallery-item:nth-child(8) { grid-column: span 3; grid-row: span 2; }
+  .gallery-bg {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 60px; position: relative;
+  }
+  .g1 { background: linear-gradient(135deg, #f9d4d0, #e8a8a0); }
+  .g2 { background: linear-gradient(135deg, #fce8d5, #f0c8a8); }
+  .g3 { background: linear-gradient(135deg, #e8d5f0, #c8a8e0); }
+  .g4 { background: linear-gradient(135deg, #d5e8f0, #a8c8e0); }
+  .g5 { background: linear-gradient(135deg, #f0e8d5, #e0c8a8); }
+  .g6 { background: linear-gradient(135deg, #d5f0e8, #a8e0c8); }
+  .g7 { background: linear-gradient(135deg, #f0d5e8, #e0a8c8); }
+  .g8 { background: linear-gradient(135deg, #e8f0d5, #c8e0a8); }
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: rgba(26,15,13,0);
+    transition: background .35s;
+    display: flex; align-items: flex-end; padding: 24px;
+  }
+  .gallery-item:hover .gallery-overlay { background: rgba(26,15,13,.35); }
+  .gallery-caption {
+    color: var(--white); opacity: 0; transform: translateY(8px);
+    transition: opacity .3s, transform .3s;
+    font-size: 13px; font-weight: 500;
+  }
+  .gallery-item:hover .gallery-caption { opacity: 1; transform: translateY(0); }
+
+  /* ─── PROCESS ─── */
+  #process { background: var(--white); }
+  .process-steps {
+    display: grid; grid-template-columns: repeat(5,1fr);
+    margin-top: 64px; position: relative;
+  }
+  .process-steps::before {
+    content: ''; position: absolute;
+    top: 40px; left: 10%; right: 10%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .step { text-align: center; padding: 0 20px; }
+  .step-circle {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: var(--cream); border: 1px solid var(--blush);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px; font-size: 32px;
+    position: relative; z-index: 2;
+    transition: background .3s, transform .3s;
+  }
+  .step:hover .step-circle {
+    background: var(--rose); transform: scale(1.1);
+  }
+  .step-num {
+    position: absolute; top: -8px; right: -8px;
+    width: 24px; height: 24px; background: var(--gold);
+    border-radius: 50%; font-size: 10px; font-weight: 600;
+    color: var(--white); display: flex; align-items: center; justify-content: center;
+    font-family: 'Jost', sans-serif;
+  }
+  .step-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 600; color: var(--dark); margin-bottom: 10px;
+  }
+  .step-desc { font-size: 12px; line-height: 1.8; color: var(--text); font-weight: 300; }
+
+  /* ─── CTA ─── */
+  #contact {
+    background: var(--deep);
+    text-align: center; padding: 120px 60px;
+    position: relative; overflow: hidden;
+  }
+  #contact::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(200,169,110,.12), transparent);
+  }
+  #contact .section-tag { color: var(--gold-light); }
+  #contact .section-title { color: var(--white); text-align: center; }
+  #contact .section-desc { color: rgba(255,255,255,.6); margin: 0 auto; text-align: center; }
+  .contact-btns {
+    display: flex; gap: 20px; justify-content: center;
+    margin-top: 48px; flex-wrap: wrap;
+    position: relative; z-index: 2;
+  }
+  .btn-wa {
+    background: #25d366; color: var(--white);
+    padding: 18px 48px; border-radius: 50px;
+    text-decoration: none; font-size: 14px; font-weight: 500;
+    letter-spacing: 1px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px;
+    transition: all .3s;
+    box-shadow: 0 8px 32px rgba(37,211,102,.3);
+  }
+  .btn-wa:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(37,211,102,.45); }
+  .btn-ig {
+    background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: var(--white);
+    padding: 18px 48px; border-radius: 50px;
+    text-decoration: none; font-size: 14px; font-weight: 500;
+    letter-spacing: 1px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px;
+    transition: all .3s;
+    box-shadow: 0 8px 32px rgba(220,39,67,.3);
+  }
+  .btn-ig:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(220,39,67,.45); }
+  .contact-info {
+    margin-top: 60px;
+    display: flex; justify-content: center; gap: 60px;
+    position: relative; z-index: 2;
+  }
+  .contact-info-item { text-align: center; }
+  .contact-info-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 8px; }
+  .contact-info-value { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--white); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark); padding: 40px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 300; letter-spacing: 3px;
+    color: rgba(255,255,255,.6);
+  }
+  .footer-logo span { color: var(--rose); font-style: italic; }
+  .footer-text { font-size: 11px; color: rgba(255,255,255,.3); letter-spacing: 1px; }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── MOBILE ─── */
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span {
+    display: block; width: 24px; height: 1.5px;
+    background: var(--dark); margin: 5px 0; transition: all .3s;
+  }
+
+  @media (max-width: 1024px) {
+    .services-grid, .why-grid { grid-template-columns: repeat(2,1fr); }
+    .gallery-item:nth-child(3) { grid-column: span 5; }
+    .gallery-item:nth-child(5) { display: none; }
+    .gallery-item:nth-child(8) { display: none; }
+    .process-steps { grid-template-columns: repeat(3,1fr); gap: 40px; }
+    .process-steps::before { display: none; }
+    .step:nth-child(4), .step:nth-child(5) { margin-top: 0; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav.scrolled { padding: 14px 24px; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: block; }
+
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-text { padding: 100px 24px 60px; }
+    .hero-visual { display: none; }
+    .hero-stats { left: 24px; bottom: 30px; gap: 32px; }
+    .stat-num { font-size: 32px; }
+
+    section { padding: 70px 24px; }
+    .services-header { flex-direction: column; gap: 20px; }
+    .services-grid { grid-template-columns: 1fr; gap: 2px; }
+    .why-grid { grid-template-columns: repeat(2,1fr); gap: 24px; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .contact-info { flex-direction: column; gap: 24px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+
+    .gallery-grid { grid-template-columns: repeat(4,1fr); }
+    .gallery-item { grid-column: span 2 !important; }
+    .gallery-item:nth-child(5) { display: flex; }
+    .gallery-item:nth-child(8) { display: flex; }
+    .gallery-item:nth-child(n) { grid-row: span 3 !important; }
+
+    .social-float { right: 12px; bottom: 20px; }
+    .social-float a { width: 42px; height: 42px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- FLOATING SOCIAL BUTTONS -->
+<div class="social-float">
+  <a href="https://wa.me/77088128644" class="wa-btn" target="_blank" title="WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+  <a href="https://www.instagram.com/love.decor_almaty" class="ig-btn" target="_blank" title="Instagram">
+    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+  </a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo"><span>love</span>.decor</a>
+  <ul class="nav-links">
+    <li><a href="#services">Қызметтер</a></li>
+    <li><a href="#portfolio">Жұмыстар</a></li>
+    <li><a href="#process">Процесс</a></li>
+    <li><a href="https://wa.me/77088128644" class="nav-cta" target="_blank">Байланыс</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-petals" id="petals"></div>
+
+  <div class="hero-text">
+    <span class="hero-badge">✦ Алматы, Қазақстан</span>
+    <h1 class="hero-title">
+      Мерекеңізді
+      <em>сиқырлы</em>
+      <strong>ете аламыз</strong>
+    </h1>
+    <p class="hero-sub">
+      Туған күн, үйлену тойы, романтикалық кеш —
+      әр мерекені ерекше сәтке айналдыратын безендіру шешімдері.
+      <br><br>
+      <strong style="font-size:13px;letter-spacing:2px;color:var(--rose)">✦ АЛМАТЫ ҚАЛАСЫ</strong>
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/77088128644" class="btn-primary" target="_blank">
+        Кеңес алу →
+      </a>
+      <a href="#portfolio" class="btn-ghost">
+        Жұмыстарды көру
+        <span class="arrow">↓</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-card-main">
+      <div class="hero-card-emoji">🌸</div>
+      <div class="hero-card-label">love.decor</div>
+      <div class="hero-card-city">ALMATY ✦ KAZAKHSTAN</div>
+    </div>
+    <div class="hero-card-float float1">
+      <div class="float-icon">🎂</div>
+      <div class="float-text">Туған күн</div>
+      <div class="float-sub">Happy Birthday</div>
+    </div>
+    <div class="hero-card-float float2">
+      <div class="float-icon">💍</div>
+      <div class="float-text">Той безендіру</div>
+      <div class="float-sub">Marry Me</div>
+    </div>
+    <div class="hero-card-float float3">
+      <div class="float-icon">❤️</div>
+      <div class="float-text">Романтика</div>
+      <div class="float-sub">Жаным • Анашым</div>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">500+</div>
+      <div class="stat-label">Мерекелер</div>
+    </div>
+    <div>
+      <div class="stat-num">5★</div>
+      <div class="stat-label">Рейтинг</div>
+    </div>
+    <div>
+      <div class="stat-num">3+</div>
+      <div class="stat-label">Жыл тәжірибе</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <div>
+      <span class="section-tag reveal">✦ Қызметтеріміз</span>
+      <h2 class="section-title reveal">Сізге арнаған<br><em>безендіру түрлері</em></h2>
+    </div>
+    <p class="section-desc reveal" style="text-align:right">
+      Кез-келген мерекені арнайы дизайнмен безендіреміз.
+      Алматы қаласында.
+    </p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-num">01</span>
+      <div class="service-icon">🎂</div>
+      <div class="service-name">Туған Күн</div>
+      <p class="service-text">Балалар мен ересектерге арналған ерекше туған күн безендіруі. Шар, гүл, баннер, фотоаймақ және тематикалық декор.</p>
+      <div class="service-tags">
+        <span class="tag">Анашым</span><span class="tag">Әкешім</span><span class="tag">Happy Birthday</span>
+      </div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">02</span>
+      <div class="service-icon">💍</div>
+      <div class="service-name">Үйлену Тойы</div>
+      <p class="service-text">Ұмытылмас той кеші үшін романтикалық безендіру. Церемония залы, арка, гүл желілері, фото аймақ, үстел безендіру.</p>
+      <div class="service-tags">
+        <span class="tag">Арка</span><span class="tag">Marry Me</span><span class="tag">Романтика</span>
+      </div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">03</span>
+      <div class="service-icon">👶</div>
+      <div class="service-name">Baby Shower</div>
+      <p class="service-text">Нәрестенің дүниеге келуін асқан нәзіктікпен тойлаңыз. Пастель реңктер, фото аймақ, тематикалық безендіру.</p>
+      <div class="service-tags">
+        <span class="tag">Пастель</span><span class="tag">Нәзік</span><span class="tag">Фото зона</span>
+      </div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">04</span>
+      <div class="service-icon">🌹</div>
+      <div class="service-name">Романтикалық Кеш</div>
+      <p class="service-text">Ұсыныс жасаймын дейсіз бе? Жылдық мерейтой? Ерекше романтикалық кеш безендіруін жасаймыз — шам, гүл, жазулар.</p>
+      <div class="service-tags">
+        <span class="tag">Жаным</span><span class="tag">Ұсыныс</span><span class="tag">Гүл</span>
+      </div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">05</span>
+      <div class="service-icon">👵</div>
+      <div class="service-name">Ата-Ана Мерекесі</div>
+      <p class="service-text">Анашым, Әкешім, Әже — ата-аналарыңызды ерекше тойлаңыз. Жылы және сезімтал безендіру, арнайы жазулар.</p>
+      <div class="service-tags">
+        <span class="tag">Анашым</span><span class="tag">Әкешім</span><span class="tag">Әже</span>
+      </div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">06</span>
+      <div class="service-icon">🎓</div>
+      <div class="service-name">Бітіру Кеші</div>
+      <p class="service-text">Мектеп немесе университет бітіру мерекесі — өмірдегі маңызды кезеңді ерекше безендіруімізбен мәңгі жадта қалдырыңыз.</p>
+      <div class="service-tags">
+        <span class="tag">Сахна</span><span class="tag">Баннер</span><span class="tag">Шар</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ЖАЗУЛАР / INSCRIPTIONS SECTION -->
+<section id="inscriptions" style="background:var(--blush);padding:80px 60px;">
+  <span class="section-tag reveal">✦ Безендіру жазулары</span>
+  <h2 class="section-title reveal">Біздің <em>жазуларымыз</em></h2>
+  <p class="section-desc reveal">Безендіруде қолданатын арнайы жазулар тізімі:</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:48px;">
+    <div class="insc-card reveal" style="background:var(--white);border-radius:20px;padding:28px 20px;text-align:center;box-shadow:0 4px 20px rgba(122,62,56,.07);transition:transform .3s;">
+      <div style="font-size:36px;margin-bottom:12px;">🌸</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--deep);font-weight:600;">Анашым</div>
+    </div>
+    <div class="insc-card reveal" style="background:var(--white);border-radius:20px;padding:28px 20px;text-align:center;box-shadow:0 4px 20px rgba(122,62,56,.07);transition:transform .3s;">
+      <div style="font-size:36px;margin-bottom:12px;">🎊</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--deep);font-weight:600;">Әкешім</div>
+    </div>
+    <div class="insc-card reveal" style="background:var(--white);border-radius:20px;padding:28px 20px;text-align:center;box-shadow:0 4px 20px rgba(122,62,56,.07);transition:transform .3s;">
+      <div style="font-size:36px;margin-bottom:12px;">🌺</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--deep);font-weight:600;">Әже</div>
+    </div>
+    <div class="insc-card reveal" style="background:var(--white);border-radius:20px;padding:28px 20px;text-align:center;box-shadow:0 4px 20px rgba(122,62,56,.07);transition:transform .3s;">
+      <div style="font-size:36px;margin-bottom:12px;">🌹</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--deep);font-weight:600;">Жаным</div>
+    </div>
+    <div class="insc-card reveal" style="background:var(--white);border-radius:20px;padding:28px 20px;text-align:center;box-shadow:0 4px 20px rgba(122,62,56,.07);transition:transform .3s;">
+      <div style="font-size:36px;margin-bottom:12px;">🎂</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--deep);font-weight:600;">Happy Birthday</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <span class="section-tag reveal">✦ Неліктен біз</span>
+  <h2 class="section-title reveal">Біздің <em>артықшылықтарымыз</em></h2>
+  <p class="section-desc reveal">Сіздің мерекеңіз — біздің жауапкершілігіміз. Алматы қаласында жоғары сапа мен жылы қарым-қатынас.</p>
+
+  <div class="why-grid">
+    <div class="why-item reveal">
+      <div class="why-icon">✨</div>
+      <div class="why-title">Бірегей дизайн</div>
+      <p class="why-text">Әр тапсырыс — жаңа идея. Сіздің қалауыңыз бен характеріңізге сай авторлық дизайн жасаймыз.</p>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-icon">⏰</div>
+      <div class="why-title">Уақытында орындау</div>
+      <p class="why-text">Мерекеге дейін барлығы дайын болады. Уақытты бағалаймыз, мерзімді сақтаймыз.</p>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-icon">💝</div>
+      <div class="why-title">Жылы қарым-қатынас</div>
+      <p class="why-text">Тапсырыс беруден алып, безендіру аяқталғанға дейін сізбен болатын командамыз бар.</p>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-icon">💰</div>
+      <div class="why-title">Қолжетімді бағалар</div>
+      <p class="why-text">Жоғары сапалы безендіруді қолжетімді бағада ұсынамыз. Бюджетіңізге сай пакет таңдаймыз.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <span class="section-tag reveal">✦ Портфолио</span>
+  <h2 class="section-title reveal">Біздің <em>жұмыстарымыз</em></h2>
+  <p class="section-desc reveal">Жүзден астам сәтті жобамыздан бірнеше мысал. Алматы қаласы. Әр мерекеге жеке тәсіл.</p>
+
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <div class="gallery-bg g1">🌸</div>
+      <div class="gallery-overlay">
+        <span class="gallery-caption">💍 Той безендіру — Алматы</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-bg g2">🎂</div>
+      <div class="gallery-overlay">
+        <span class="gallery-caption">🎂 Туған күн безендіру</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-bg g3">🌺</div>
+      <div class="gallery-overlay">
+        <span class="gallery-caption">🌺 Анашым безендіру</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-bg g4">👶</div>
+      <div class="gallery-overlay">
+        <span class="gallery-caption">👶 Baby Shower</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-bg g5">❤️</div>
+      <div class="gallery-overlay">
+        <span class="gallery-caption">❤️ Романтикалық кеш</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-bg g6">🌹</div>
+      <div class="gallery-overlay">
+        <span class="gallery-caption">🌹 Жаным — Романтика</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-bg g7">🎓</div>
+      <div class="gallery-overlay">
+        <span class="gallery-caption">🎓 Бітіру кеші</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-bg g8">🎈</div>
+      <div class="gallery-overlay">
+        <span class="gallery-caption">🎈 Шар безендіру</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <span class="section-tag reveal">✦ Жұмыс тәртібі</span>
+  <h2 class="section-title reveal">5 қарапайым <em>қадам</em></h2>
+  <p class="section-desc reveal">Тапсырыс берген сәттен бастап мерекеңізге дейін — барлық процесс осылай жүреді.</p>
+
+  <div class="process-steps">
+    <div class="step reveal">
+      <div class="step-circle">
+        📞
+        <span class="step-num">1</span>
+      </div>
+      <div class="step-name">Байланыс</div>
+      <p class="step-desc">WhatsApp немесе Instagram арқылы бізге хабарласыңыз. Кеңес аласыз.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-circle">
+        💬
+        <span class="step-num">2</span>
+      </div>
+      <div class="step-name">Талқылау</div>
+      <p class="step-desc">Мерекенің түрі, стиль, бюджет және қалауыңызды бірге талқылаймыз.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-circle">
+        🎨
+        <span class="step-num">3</span>
+      </div>
+      <div class="step-name">Дизайн</div>
+      <p class="step-desc">Сіздің қалауыңызға сай авторлық дизайн концепциясын дайындаймыз.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-circle">
+        ✅
+        <span class="step-num">4</span>
+      </div>
+      <div class="step-name">Бекіту</div>
+      <p class="step-desc">Дизайнды бекітіп, соңғы детальдарды нақтылаймыз. Аванс аламыз.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-circle">
+        🌟
+        <span class="step-num">5</span>
+      </div>
+      <div class="step-name">Орнату</div>
+      <p class="step-desc">Мерекеден бұрын барлығын дайындап, орнатып беріп кетеміз. Сіз тек ләззат аласыз!</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section id="contact">
+  <span class="section-tag">✦ Бізбен байланысыңыз</span>
+  <h2 class="section-title" style="max-width:600px;margin:0 auto">Мерекеңізді <em>бірге жоспарлайық</em></h2>
+  <p class="section-desc">Кеңес алуға болады. Хабарласыңыз — армандаған мерекеңізді жасауға дайынбыз!</p>
+
+  <div class="contact-btns">
+    <a href="https://wa.me/77088128644" class="btn-wa" target="_blank">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp: +7 708 812 86 44
+    </a>
+    <a href="https://www.instagram.com/love.decor_almaty" class="btn-ig" target="_blank">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      @love.decor_almaty
+    </a>
+  </div>
+
+  <div class="contact-info">
+    <div class="contact-info-item">
+      <div class="contact-info-label">Instagram</div>
+      <div class="contact-info-value">@love.decor_almaty</div>
+    </div>
+    <div class="contact-info-item">
+      <div class="contact-info-label">WhatsApp</div>
+      <div class="contact-info-value">+7 708 812 86 44</div>
+    </div>
+    <div class="contact-info-item">
+      <div class="contact-info-label">Қала</div>
+      <div class="contact-info-value">Алматы, Қазақстан</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><span>love</span>.decor_almaty</div>
+  <div class="footer-text">© 2024 Love Decor Almaty · Алматы қаласы · Барлық құқықтар қорғалған</div>
+</footer>
+
+<script>
+// ─── CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
+function animateRing() { rx += (mx-rx)*.12; ry += (my-ry)*.12; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(animateRing); }
+animateRing();
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.width='20px'; cursor.style.height='20px'; ring.style.width='52px'; ring.style.height='52px'; });
+  el.addEventListener('mouseleave', () => { cursor.style.width='12px'; cursor.style.height='12px'; ring.style.width='36px'; ring.style.height='36px'; });
+});
+
+// ─── NAV SCROLL
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 60); });
+
+// ─── PETALS
+const pContainer = document.getElementById('petals');
+for(let i = 0; i < 18; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.style.left = Math.random()*100 + '%';
+  p.style.width = (6 + Math.random()*8) + 'px';
+  p.style.height = (10 + Math.random()*12) + 'px';
+  p.style.animationDuration = (8 + Math.random()*12) + 's';
+  p.style.animationDelay = '-' + (Math.random()*15) + 's';
+  p.style.opacity = .3 + Math.random()*.4;
+  const colors = ['#f2d9d0','#e8c8c0','#f0e0d8','#deb8b0','#c9a098'];
+  p.style.background = colors[Math.floor(Math.random()*colors.length)];
+  pContainer.appendChild(p);
+}
+
+// ─── SCROLL REVEAL
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if(e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i*80);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => io.observe(el));
+
+// ─── INSCRIPTION CARDS HOVER
+document.querySelectorAll('.insc-card').forEach(c => {
+  c.addEventListener('mouseenter', () => c.style.transform = 'translateY(-6px)');
+  c.addEventListener('mouseleave', () => c.style.transform = '');
+});
+
+// ─── MOBILE MENU
+function toggleMenu() {
+  const links = document.querySelector('.nav-links');
+  if(links.style.display === 'flex') {
+    links.style.display = 'none';
+  } else {
+    links.style.cssText = 'display:flex; flex-direction:column; position:fixed; top:70px; left:0; right:0; background:rgba(253,246,238,.98); backdrop-filter:blur(10px); padding:32px; gap:24px; z-index:99; box-shadow:0 20px 60px rgba(0,0,0,.1)';
+    document.querySelectorAll('.nav-links a').forEach(a => { a.style.fontSize='16px'; });
+  }
+}
+</script>
+</body>
+</html>
